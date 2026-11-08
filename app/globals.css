@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+/* ============ Rana Nadeem Portfolio — blue design tokens ============ */
+:root {
+  --bg: #070d1f;          /* page background (very dark navy) */
+  --card: #0e1830;        /* card surfaces */
+  --text: #e8eefc;        /* body text */
+  --muted: #93a1c0;       /* secondary text */
+  --accent: #3b82f6;      /* vivid blue */
+  --accent-light: #bfdbfe;/* light blue (gradient start) */
+  --accent-deep: #1d4ed8; /* deep blue (gradient end) */
+  --glow: rgba(59, 130, 246, 0.45);
+  --border: #1e2c4d;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+section { scroll-margin-top: 80px; } /* fixed navbar offset */
+
+::selection { background: var(--accent); color: #fff; }
+
+/* Custom blue scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent), var(--accent-deep));
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ============ Custom helpers (contract) ============ */
+
+/* Blue gradient text via background-clip */
+.text-gradient {
+  background: linear-gradient(90deg, var(--accent-light), var(--accent), var(--accent-deep));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Card with blue border + glow */
+.glow-card {
+  background: rgba(14, 24, 48, 0.78); /* halka sa transparent — peeche ke stars halke se dikhte hain */
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.12);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.glow-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 36px var(--glow);
+  transform: translateY(-4px);
+}
+
+/* Scroll reveal (toggled by components/Reveal.jsx, both directions) */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============ Keyframes (contract) ============ */
+
+/* Slow top-bottom float (hero photo, badges) */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16px); }
+}
+.animate-floatY { animation: floatY 6s ease-in-out infinite; }
+
+/* Star twinkle for Particles canvas fallback / decorative dots */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+.animate-twinkle { animation: twinkle 3s ease-in-out infinite; }
+
+/* Typing cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink { animation: blink 0.9s step-start infinite; }
+
+/* Soft bounce for scroll-down arrows */
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+.animate-bounce-soft { animation: bounce-soft 1.8s ease-in-out infinite; }
+
+/* Animated gradient sweep (buttons, headings background) */
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-pan {
+  background-size: 200% 200%;
+  animation: gradient-pan 6s ease infinite;
+}
+
+/* ============ v3 (video match): morphing photo frame + flip letters ============ */
+/* Photo frame: thin glowing blue gradient border.
+   Frame AND photo share .morph-shape so their border-radius
+   morphs in sync — the shape slowly changes like the reference video. */
+.photo-frame {
+  /* Beech transparent — photo aur stars dono dikhte hain.
+     Gradient kinara ::after wali alag layer se banta hai,
+     taake photo par koi parda na aaye. */
+  border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+  filter: drop-shadow(0 0 22px rgba(59, 130, 246, 0.45));
+}
+.photo-frame::after {
+  /* Gradient ring — sirf 3px kinara, beech khaali */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  background: linear-gradient(160deg, #bfdbfe, #3b82f6 45%, #1d4ed8);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.morph-shape {
+  border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%;
+  animation: morph 10s ease-in-out infinite;
+}
+@keyframes morph {
+  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
+  33% { border-radius: 50% 50% 46% 54% / 42% 44% 56% 58%; }
+  66% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 45%; }
+}
+
+/* Role text: each letter flips in with a 3D roll (staggered) */
+.flip-word {
+  display: inline-block;
+  perspective: 500px;
+}
+.flip-letter {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  animation: flipIn 0.5s cubic-bezier(0.2, 0.7, 0.3, 1.25) both;
+}
+@keyframes flipIn {
+  0% { transform: rotateX(90deg) translateY(6px); opacity: 0; }
+  100% { transform: rotateX(0deg) translateY(0); opacity: 1; }
+}
+
+/* ============ Button hover sweep (rang left se right khulta hai) ============ */
+.btn-sweep {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.btn-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+}
+.btn-sweep:hover::before { transform: scaleX(1); }
+/* Asli (roshan gradient) button par hover: gehra blue sweep + safed text */
+.btn-sweep-primary::before { background: linear-gradient(90deg, #1e3a8a, #1d4ed8); }
+.btn-sweep-primary:hover { color: #ffffff; }
+/* Outline button par hover: blue bhar jata hai */
+.btn-sweep-outline::before { background: linear-gradient(90deg, #1d4ed8, #3b82f6); }
+.btn-sweep-outline:hover { border-color: transparent; }
