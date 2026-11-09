@@ -190,8 +190,8 @@ export const projects = [
     emoji: "💼",
     description: "This very portfolio — Next.js, Tailwind CSS, blue particle theme.",
     categories: ["NEXTJS"],
-    liveUrl: "#",
-    githubUrl: "#",
+    liveUrl: "https://rana-nadeem-portfolio.vercel.app/",
+    githubUrl: "https://github.com/nadeemmanj/rana-nadeem-portfolio",
   },
   {
     slug: "weather-app",
