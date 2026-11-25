@@ -164,15 +164,15 @@ export const projects = [
     liveUrl: "https://mango-store-admin.vercel.app/",
     githubUrl: "https://github.com/nadeemmanj/mango-store-admin",
   },
-  {
-  slug: "bella-roma",
-  title: "Bella Roma AI Chatbot",
-  emoji: "🍝",
+{
+  slug: "whatsapp-property-bot",
+  title: "WhatsApp Property Bot",
+  emoji: "🏠",
   description:
-    "AI restaurant assistant — answers menu questions, shares opening hours and books tables automatically (Gemini function calling).",
+    "AI chatbot for property dealers — answers buyer questions on WhatsApp and captures leads automatically (Groq-powered).",
   categories: ["AI"],
-  liveUrl: "https://bella-roma-ai-chatbot.vercel.app/",
-  githubUrl: "https://github.com/nadeemmanj/bella-roma-ai-chatbot",
+  liveUrl: "https://whatsapp-dealer-bot.vercel.app/",
+  githubUrl: "https://github.com/nadeemmanj/whatsapp-dealer-bot",
 },
   {
     slug: "task-manager",
